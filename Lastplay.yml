@@ -1,0 +1,17 @@
+---
+- name: Run command to execute another Ansible playbook
+  hosts: all
+  become: true
+  
+  tasks:
+  - name: Execute the playbook
+    command: ansible-playbook -i /etc/ansible/hosts  ~/AMAZON2-CIS-main/AMAZON2-CIS-main/site.yml  -t post_remediation_audit --become
+
+  - name: Execute the playbook
+    command: packer validate -var-file=variables.json cis-ami.pkr.hcl
+
+  - name: Execute the playbook
+    command: packer build  -var-file=variables.json cis-ami.pkr.hcl
+   
+
+
